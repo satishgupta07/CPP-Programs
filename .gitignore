@@ -30,7 +30,11 @@
 *.exe
 *.out
 *.app
+*.bin
 
 
 # VSCode
 .vscode/*
+
+## competitive programmin helper
+.cph
