@@ -44,6 +44,13 @@ class Student {
         cout<<"Age : "<<age<<endl;
         cout<<"Gender : "<<gender<<endl;
     }
+
+    bool operator == (Student &a) {
+        if(name == a.name && age == a.age && gender == a.gender) {
+            return true;
+        }
+        return false;
+    }
 };
 
 int main() {
@@ -55,6 +62,13 @@ int main() {
 
     Student c = a;
     c.printInfo();
+
+    if(c==a) {
+        cout<<"Same"<<endl;
+    }
+    else {
+        cout<<"Not Same"<<endl;
+    }
 
     return 0;
 }
