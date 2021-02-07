@@ -83,6 +83,36 @@ void deletion(node* &head, int val) {
     delete todelete;
 }
 
+node* reverse(node* &head) {
+
+    node* prevptr = NULL;
+    node* currptr = head;
+    node* nextptr;
+
+    while(currptr != NULL) {
+        nextptr = currptr->next;
+        currptr->next=prevptr;
+        
+        prevptr=currptr;
+        currptr=nextptr;
+    }
+
+    return prevptr;
+}
+
+node* reverseRecursive(node* &head) {
+
+    if(head==NULL || head->next==NULL) {
+        return head;
+    }
+
+    node* newhead = reverseRecursive(head->next);
+    head->next->next = head;
+    head->next=NULL;
+
+    return newhead;
+}
+
 int main() {
 
     node* head = NULL;
@@ -96,6 +126,12 @@ int main() {
     deletion(head,3);
     // deleteAtHead(head);
     display(head);
+
+    // node* newhead = reverse(head);
+    // display(newhead);
+
+    node* newhead1 = reverseRecursive(head);
+    display(newhead1);
 
     return 0;
 }
