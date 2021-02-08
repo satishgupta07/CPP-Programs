@@ -187,6 +187,44 @@ void removeCycle(node* &head) {
     slow->next=NULL;
 }
 
+int length(node *head) {
+
+    int l=0;
+    node* temp = head;
+    while(temp!=NULL) {
+        l++;
+        temp=temp->next;
+    }
+    return l;
+}
+
+node* kappend(node* &head, int k) {
+
+    node* newHead;
+    node* newTail;
+    node* tail=head;
+
+    int l = length(head);
+    k = k%l;
+    int count=1;
+
+    while(tail->next != NULL) {
+        if(count==l-k) {
+            newTail = tail;
+        }
+        if(count==l-k+1) {
+            newHead= tail;
+        }
+        tail = tail->next;
+        count++;
+    }
+
+    newTail->next=NULL;
+    tail->next=head;
+
+    return newHead;
+}
+
 int main() {
 
     node* head = NULL;
@@ -216,12 +254,16 @@ int main() {
     // node* newhead = reversek(head,k);
     // display(newhead);
 
-    makeCycle(head,3);
-    cout<<detectCycle(head)<<endl;
+    // makeCycle(head,3);
+    // cout<<detectCycle(head)<<endl;
 
-    removeCycle(head);
-    cout<<detectCycle(head)<<endl;
+    // removeCycle(head);
+    // cout<<detectCycle(head)<<endl;
+    // display(head);
+
     display(head);
+    node* newhead = kappend(head,3);
+    display(newhead);
 
     return 0;
 }
