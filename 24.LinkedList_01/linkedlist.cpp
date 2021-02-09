@@ -279,12 +279,68 @@ void intersect(node* &head1, node* &head2, int pos) {
     temp2->next = temp1;
 }
 
+node* merge(node* &head1, node* &head2) {
+
+    node* p1 = head1;
+    node* p2 = head2;
+    node* dummyNode = new node(-1);
+    node* p3 = dummyNode;
+
+    while(p1!=NULL && p2!=NULL) {
+        if(p1->data < p2->data) {
+            p3->next=p1;
+            p1=p1->next;
+        }
+        else {
+            p3->next = p2;
+            p2 = p2->next;
+        }
+        p3 = p3->next;
+    }
+
+    while(p1!=NULL) {
+        p3->next=p1;
+        p1=p1->next;
+        p3=p3->next;
+    }
+
+    while(p2!=NULL) {
+        p3->next=p2;
+        p2=p2->next;
+        p3=p3->next;
+    }
+
+    return dummyNode->next;
+}
+
+node* mergeRecursive(node* &head1, node* &head2) {
+
+    if(head1 == NULL) {
+        return head2;
+    }
+    if(head2 == NULL) {
+        return head1;
+    }
+
+    node* result;
+    if(head1->data < head2->data) {
+        result = head1;
+        result->next = mergeRecursive(head1->next, head2);
+    }
+    else {
+        result = head2;
+        result->next = mergeRecursive(head1, head2->next);
+    }
+
+    return result;
+}
+
 int main() {
 
-    node* head = NULL;
-    insertAtTail(head,1);
-    insertAtTail(head,2);
-    insertAtTail(head,3);
+    // node* head = NULL;
+    // insertAtTail(head,1);
+    // insertAtTail(head,2);
+    // insertAtTail(head,3);
     // display(head);
     // insertAtHead(head,4);
     // display(head);
@@ -299,9 +355,9 @@ int main() {
     // node* newhead1 = reverseRecursive(head);
     // display(newhead1);
 
-    insertAtTail(head,4);
-    insertAtTail(head,5);
-    insertAtTail(head,6);
+    // insertAtTail(head,4);
+    // insertAtTail(head,5);
+    // insertAtTail(head,6);
 
     // display(head);
     // int k=2;
@@ -319,16 +375,33 @@ int main() {
     // node* newhead = kappend(head,3);
     // display(newhead);
 
-    node* head2 = NULL;
-    insertAtTail(head2,9);
-    insertAtTail(head2,10);
+    // node* head2 = NULL;
+    // insertAtTail(head2,9);
+    // insertAtTail(head2,10);
 
-    intersect(head,head2,3);
-    display(head);
+    // intersect(head,head2,3);
+    // display(head);
+    // display(head2);
+
+    // cout<<intersection(head,head2)<<endl;
+
+    node* head1 = NULL;
+    node* head2 = NULL;
+
+    int arr1[] = {1,4,5,7};
+    int arr2[] = {2,3,6};
+    for(int i=0; i<4; i++) {
+        insertAtTail(head1, arr1[i]);
+    }
+    for(int i=0; i<3; i++) {
+        insertAtTail(head2, arr2[i]);
+    }
+    display(head1);
     display(head2);
 
-    cout<<intersection(head,head2)<<endl;
-    
+    // node* newhead = merge(head1, head2);
+    node* newhead = mergeRecursive(head1, head2);
+    display(newhead);
 
     return 0;
 }
